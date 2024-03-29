@@ -4,7 +4,7 @@ import numpy
 
 def show_colour(event, x, y, flags, param):
     #if left mouse button is clicked
-    if event == cv2.EVENT_LBUTTONDBLCLK:
+    if event == cv2.EVENT_LBUTTONDOWN:
         bgr_colour = tuple(frame[y][x].tolist())
         rgb_colour = bgr_colour[::-1]
         colour_image[:] = bgr_colour
@@ -13,7 +13,7 @@ def show_colour(event, x, y, flags, param):
                     str(rgb_colour),
                     (50, 50),
                     font, 1,
-                    (255 - bgr_colour[0], 255 - bgr_colour[1], 255 - bgr_colour[2]),
+                    (0, 0, 0) if sum(rgb_colour) > 380 else (255, 255, 255),
                     2,
                     cv2.LINE_4)
         #display colour screen
@@ -37,7 +37,7 @@ while(True):
     #display video
     cv2.imshow('frame', frame)
     
-
+    #quit program on 'q' press
     if cv2.waitKey(25) & 0xFF == ord('q'):
         break
 
